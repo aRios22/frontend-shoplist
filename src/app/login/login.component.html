@@ -1,4 +1,7 @@
 <div class="container">
+    <h1>Inicio de Sesión</h1>
+    <br>
+    <h4>Por favor, Ingrese sus Credenciales</h4>
     <div class="login">
         <form class="custom-form" method="post" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         
@@ -47,7 +50,7 @@
               
                 
               </div>
-          <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+          <button type="submit" class="btn btn-outline-light" [disabled]="loginForm.invalid">Iniciar Sesión</button>
         </form>
       </div>
     

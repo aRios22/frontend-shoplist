@@ -1,0 +1,13 @@
+.login{
+    margin: 3em;
+}
+input{
+    border-radius: 7px;
+    margin-bottom: 8px;
+}
+
+button{
+    border-radius: 7px;
+    float: right;
+}
+

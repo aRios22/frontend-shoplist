@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserServiceService } from '../services/user/user-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,12 @@ export class LoginComponent {
     }
     ,
       (err) => {
-       console.log("error de login")
+        Swal.fire({
+          title: 'Error',
+          text: 'Su usuario o Contraseña son incorrectos',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       },);
   }
 }
