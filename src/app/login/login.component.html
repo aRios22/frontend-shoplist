@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="login">
+        <form class="custom-form" method="post" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        
+          <div class="col">
+            <div class="row">
+    
+              <input
+              type="usuario"
+              formControlName="usuario"
+              name="usuario"
+              placeholder="Usuario"
+              required="required"
+              />
+              <div *ngIf="loginForm.controls['usuario'].invalid && (loginForm.controls['usuario'].dirty || 
+              loginForm.controls['usuario'].touched)"
+              class="div-error row">
+        
+                <small class="text-danger" *ngIf="loginForm.controls['usuario'].errors?.['required']">
+                  Por favor Ingrese su usuario
+                </small>
+                
+              </div>
+    
+            </div>
+           
+          <div class="row">
+            <input
+            type="password"
+            formControlName="clave"
+            name="clave"
+            placeholder="Contraseña"
+            required="required"
+            />
+            <div *ngIf="loginForm.controls['clave'].invalid && (loginForm.controls['clave'].dirty || 
+            loginForm.controls['clave'].touched)"
+            class="div-error row">
+    
+              <small class="text-danger" *ngIf="loginForm.controls['clave'].errors?.['required']">
+                Por favor Ingrese su contraseña
+              </small>
+            </div>
+          </div>
+          
+          
+              
+              
+                
+              </div>
+          <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+        </form>
+      </div>
+    
+</div>
