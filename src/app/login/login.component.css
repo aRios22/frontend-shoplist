@@ -1,5 +1,5 @@
 .login{
-    margin: 3em;
+    padding: 3em;
 }
 input{
     border-radius: 7px;
@@ -9,5 +9,6 @@ input{
 button{
     border-radius: 7px;
     float: right;
+    margin-right: -12px;
 }
 
