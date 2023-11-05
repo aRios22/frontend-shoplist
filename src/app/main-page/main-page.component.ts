@@ -48,7 +48,6 @@ export class MainPageComponent {
     
      this.listaService.getAllListas(this.userService.getUsername()).subscribe(
       (allData)=>{
-        console.log("Encontramos cosas")
         this.isLoading = false;
         this.empadronadosList = allData;
         this.dataSource=new MatTableDataSource(this.empadronadosList);
@@ -57,7 +56,6 @@ export class MainPageComponent {
       },
       err => 
       {
-        console.log("not found")
         this.isLoading = false;
       }
      );
@@ -82,6 +80,7 @@ export class MainPageComponent {
 
   detalle(element:any){
     console.log("Abre pagina gestion de la lista")
+    this.router.navigate(['detail-shopping-list'], {state:{list:element}});
   }
 
 }

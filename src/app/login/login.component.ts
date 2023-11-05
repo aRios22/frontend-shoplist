@@ -26,7 +26,6 @@ export class LoginComponent {
     }
     this.userService.login(this.loginForm.value).subscribe((response) => {
       this.userService.setUsername(response['usuario']);
-      console.log("Login exitoso")
       this.router.navigate(['main-page']);
     }
     ,
