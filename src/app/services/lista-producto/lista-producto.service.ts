@@ -22,4 +22,11 @@ export class ListaProductoService {
         'Authorization': `Bearer ${this.userService.getToken()}`  
     } });
   }
+
+  shopListaProductos(nombre:any, listaCompras:any, usuario:any){
+    return this.http.get('http://localhost:8080/api/lista-producto/comprar/?usuario='+usuario+'&listacompras='+listaCompras+'&producto='+nombre,{ headers : 
+    {   
+        'Authorization': `Bearer ${this.userService.getToken()}`  
+    } });
+  }
 }

@@ -71,8 +71,6 @@ export class DetailShoppingListComponent {
     this.listaProductoService.createListaProductos(this.productoForm.value, window.history.state['list']['nombre'], this.userService.getUsername()).subscribe(
       (response)=>{
         this.productoForm.reset();
-        console.log("Registrado ")
-        
         this.refresh()
         return
       },
@@ -129,6 +127,34 @@ export class DetailShoppingListComponent {
       }
     })
      
+  }
+
+  comprar(element:any){
+    Swal.fire({
+      title: '¿Desea marcar el producto como comprado?',
+      text: 'Por favor, confirme si desea comprar el producto ',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.listaProductoService.shopListaProductos(element.nombre, window.history.state['list']['nombre'], this.userService.getUsername()).subscribe(
+          (response)=>{
+            this.refresh()
+          },
+          (err) => {
+            Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+          }
+        )
+
+      } else if (result.isDismissed) {
+
+        return;
+      }
+    })
   }
     
 }
