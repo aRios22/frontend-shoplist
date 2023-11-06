@@ -82,4 +82,34 @@ export class MainPageComponent {
     this.router.navigate(['detail-shopping-list'], {state:{list:element}});
   }
 
+  delete(element:any){
+    console.log()
+    console.log()
+    Swal.fire({
+      title: '¿Desea eliminar la lista de compra?',
+      text: 'Todos los productos en la lista seran eliminados',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.listaService.deleteLista(element['nombre'], this.userService.getUsername()).subscribe(
+          (response)=>{
+            this.refresh()
+          },
+          (err) => {
+            Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+          }
+        )
+
+      } else if (result.isDismissed) {
+
+        return;
+      }
+    })
+  }
+
 }

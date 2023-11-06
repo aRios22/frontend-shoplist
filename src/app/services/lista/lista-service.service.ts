@@ -29,4 +29,11 @@ export class ListaServiceService {
         'Authorization': `Bearer ${this.userService.getToken()}`  
     } });
   }
+
+  deleteLista(nombreLista:any, username:any){
+    return this.http.delete('http://localhost:8080/api/lista-compras/eliminar/?usuario='+username+'&listacompras='+nombreLista,{ headers : 
+    {   
+        'Authorization': `Bearer ${this.userService.getToken()}`  
+    } });
+  }
 }
