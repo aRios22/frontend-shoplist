@@ -7,6 +7,7 @@ import { ListaServiceService } from '../services/lista/lista-service.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductoServiceService } from '../services/productos/producto-service.service';
 import Swal from 'sweetalert2';
+import { ListaProductoService } from '../services/lista-producto/lista-producto.service';
 
 @Component({
   selector: 'app-detail-shopping-list',
@@ -21,13 +22,14 @@ export class DetailShoppingListComponent {
 
   empadronadosList: any=[];
   dataSource: any;
-  displayedColumns:string[]=["Nombre Producto", "Precio", "Estado","Fecha" , "Nombre Proveedor"]
+  displayedColumns:string[]=["Nombre Producto", "Precio", "Estado","Fecha" , "Nombre Proveedor", "Opciones"]
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   isLoading = true;
 
   allProducts:any;
 
-  constructor(public listaService: ListaServiceService, public userService: UserServiceService, private router: Router, public productService:ProductoServiceService) {
+  constructor(public listaService: ListaServiceService, public userService: UserServiceService, private router: Router, 
+    public productService:ProductoServiceService, public listaProductoService:ListaProductoService) {
     //console.log(window.history.state['list']); // should log out 'bar'
   }
 
@@ -36,7 +38,6 @@ export class DetailShoppingListComponent {
 
     this.productService.getAllProducts().subscribe(
       (allData)=>{
-        console.log(allData)
         this.allProducts=allData;
       },
       err => 
@@ -55,7 +56,9 @@ export class DetailShoppingListComponent {
      },
      err => 
      {
-        Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+      this.isLoading=false
+      Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+      return
      }
     );
 
@@ -65,6 +68,67 @@ export class DetailShoppingListComponent {
     if(this.productoForm.invalid){
       return;
     }
-    console.log(this.productoForm.value)
+    this.listaProductoService.createListaProductos(this.productoForm.value, window.history.state['list']['nombre'], this.userService.getUsername()).subscribe(
+      (response)=>{
+        this.productoForm.reset();
+        console.log("Registrado ")
+        
+        this.refresh()
+        return
+      },
+      (err) => {
+        Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+        return
+      }
+    )
   }
+
+  refresh() {
+    this.listaService.getListaProducto(this.userService.getUsername(), window.history.state['list']['nombre']).subscribe(
+      (allData)=>{
+         this.isLoading = false;
+         this.empadronadosList = allData;
+         this.dataSource=new MatTableDataSource(this.empadronadosList);
+         this.dataSource.paginator = this.paginator;
+ 
+      },
+      err => 
+      {
+        this.isLoading=false
+        Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+        return
+      }
+     );
+  }
+
+  eliminar(element:any){
+    Swal.fire({
+      title: '¿Desea eliminar el producto de su lista?',
+      text: 'Por favor, confirme si desea Eliminar el producto ',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.listaProductoService.deleteListaProductos(element.nombre, window.history.state['list']['nombre'], this.userService.getUsername()).subscribe(
+          (response)=>{
+            this.productoForm.reset();
+            this.refresh()
+          },
+          (err) => {
+            Swal.fire({title:'Atención', text:err['error'], icon:'warning', confirmButtonColor: '#0F2041', iconColor:'#9B1111'});
+          }
+        )
+
+      } else if (result.isDismissed) {
+
+        return;
+      }
+    })
+     
+  }
+    
 }

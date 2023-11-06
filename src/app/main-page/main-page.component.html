@@ -2,7 +2,7 @@
 
     <h1>Listas de Compra</h1>
     <br>
-
+    <p>Aquí podra crear nuevas listas de Compra</p>
     <div class="new-list">
         <form class="custom-form" method="post" [formGroup]="crearListaForm" (ngSubmit)="onSubmit()">
         
@@ -58,6 +58,7 @@
     </div>
         <hr>
         <div *ngIf="userService.isLoggedIn()" class="table-container">
+            <p>A continuación podra ver y gestionar sus Listas de Compra</p>
             <mat-card>
                 <div class="table-filter">
         
@@ -85,7 +86,8 @@
                             <td mat-cell *matCellDef="let element"
                             class="td-centered">
                             <a href="javascript:void(0);" (click)="detalle(element)" > <img class="img-usr" src="./assets/img/zoom_logo.png"><img src="" alt=""></a>
-                            </td >
+                            <a href="javascript:void(0);"> <img class="img-usr" src="./assets/img/delete.png.png"><img src="" alt=""></a>
+                        </td >
                         </ng-container>
                         <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             

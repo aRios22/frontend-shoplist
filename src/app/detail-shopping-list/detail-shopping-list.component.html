@@ -1,6 +1,18 @@
-<h1>Lista de Productos en lista</h1>
+
+<div class="row">
+    <div class="col">
+        <h1>Lista de Productos en lista</h1>
+        <button type="button" routerLink="/main-page" class="btn btn-outline-danger btn-back">Atrás</button>
+    </div>
+</div>
+
+
+
+
 
 <div class="new-list">
+<p>Por favor tenga en cuenta, que solo puede tener un item de cada tipo en una lista</p>
+
     <form class="custom-form" method="post" [formGroup]="productoForm" (ngSubmit)="onSubmit()">
     
     <div class="col">
@@ -68,7 +80,13 @@
                     <td 
                     mat-cell *matCellDef="let element" class="td-centered">{{element.nombreProveedor}}</td>
                 </ng-container>
-                
+                <ng-container matColumnDef="Opciones">
+                    <th mat-header-cell class="th-last" *matHeaderCellDef>OPCIONES</th>
+                    <td mat-cell *matCellDef="let element"
+                    class="td-centered">
+                    <a href="javascript:void(0);" (click)="eliminar(element)" > <img class="img-usr" src="./assets/img/delete.png.png"><img src="" alt=""></a>
+                    </td >
+                </ng-container>
                 
                 <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     

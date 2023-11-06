@@ -79,7 +79,6 @@ export class MainPageComponent {
   }
 
   detalle(element:any){
-    console.log("Abre pagina gestion de la lista")
     this.router.navigate(['detail-shopping-list'], {state:{list:element}});
   }
 
